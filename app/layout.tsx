@@ -5,6 +5,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 
+export const runtime = "edge";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,9 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main>
-            <div>{children}</div>
-          </main>
+          <main>{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

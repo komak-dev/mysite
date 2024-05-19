@@ -7,15 +7,9 @@ import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
 import ReactCodeMirror, { ViewUpdate } from "@uiw/react-codemirror";
 import { useCallback, useEffect, useState } from "react";
 
-export default function Home() {
-  const md = `# hello markdown
-- item1
-- item2
-- item3 
+export const runtime = "edge";
 
-## header2
-  `;
-
+export default function Page() {
   const [editorValue, setEditorValue] = useState("");
   const onChange = useCallback((val: string, viewUpdate: ViewUpdate) => {
     setEditorValue(val);

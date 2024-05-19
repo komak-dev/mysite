@@ -31,7 +31,7 @@ export default function Header() {
         <div className="flex gap-4 items-center">
           <Button asChild variant="ghost">
             <Link href="/" className="pl-3 font-bold text-xl">
-              Koma's web
+              Koma web
             </Link>
           </Button>
           <div className="hidden md:flex">
@@ -69,7 +69,7 @@ function MobileNav() {
   );
 }
 
-const NAVIGATION_TAGS = [
+const NAVIGATION_TAGS: TAG[] = [
   {
     label: "About",
     path: "/about",
@@ -81,3 +81,9 @@ const NAVIGATION_TAGS = [
     id: "posts",
   },
 ];
+
+type TAG = {
+  label: string;
+  path: string;
+  id: string;
+};
