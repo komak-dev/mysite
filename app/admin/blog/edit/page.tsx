@@ -20,8 +20,8 @@ export default function Page() {
 
   return (
     <div className="flex flex-row p-6">
-      <div className="flex-1 rounded-3xl shadow-lg border p-3 bg-[#1a1c27]">
-        {/* <ReactCodeMirror
+      {/* <div className="flex-1 rounded-3xl shadow-lg border p-3 bg-[#1a1c27]"> */}
+      {/* <ReactCodeMirror
           value={editorValue}
           onChange={onChange}
           extensions={[
@@ -31,8 +31,12 @@ export default function Page() {
           height={`${windowHeight - 250}px`}
           width={`${(windowWidth - 112) / 2}px`}
         /> */}
-        <Textarea onChange={(e) => setEditorValue(e.target.value)} />
-      </div>
+      <Textarea
+        onChange={(e) => setEditorValue(e.target.value)}
+        className="overflow-auto flex-1 border p-3 rounded-3xl shadow-lg"
+        style={{ height: `${windowHeight - 226}px` }}
+      />
+      {/* </div> */}
       <div className="w-3"></div>
       <div
         className="overflow-auto flex-1 border p-3 rounded-3xl shadow-lg"

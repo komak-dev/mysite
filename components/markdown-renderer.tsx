@@ -6,12 +6,15 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+// import rehypePrettyCode from "rehype-pretty-code";
+// import rehypeShiki from "@shikijs/rehype";
+import rehypeHighlight from "rehype-highlight";
 import * as prod from "react/jsx-runtime";
 import Link from "next/link";
 import React from "react";
 import matter from "gray-matter";
 import { Button } from "./ui/button";
-
+import "highlight.js/styles/tokyo-night-dark.css";
 export function MarkdownRenderer({ md }: { md: string }) {
   let content: string = "";
   let title: string = "";
@@ -22,6 +25,7 @@ export function MarkdownRenderer({ md }: { md: string }) {
     title = mdObj.data.title as string;
     tags = mdObj.data.tags as string[];
   } catch {}
+
   return (
     <div>
       <div className="mb-6  border-b flex flex-col justify-between items-center px-3">
@@ -50,8 +54,10 @@ export function MarkdownRenderer({ md }: { md: string }) {
             .use(remarkGfm)
             .use(remarkMath)
             .use(remarkRehype, { allowDangerousHtml: true })
+            // .use(rehypePrettyCode)
             .use(rehypeRaw)
             .use(rehypeKatex)
+            .use(rehypeHighlight)
             //@ts-ignore
             .use(rehypeReact, {
               Fragment: prod.Fragment,
@@ -63,6 +69,7 @@ export function MarkdownRenderer({ md }: { md: string }) {
                 h2: CustomH2,
                 h3: CustomH3,
                 a: CustomLink,
+                pre: CustomPre,
               },
             })
             .processSync(content || "").result
@@ -94,4 +101,7 @@ function CustomLink({
       {children}
     </Link>
   );
+}
+function CustomPre({ children }: { children: React.ReactElement }) {
+  return <pre className="rounded-lg overflow-hidden text-sm">{children}</pre>;
 }
