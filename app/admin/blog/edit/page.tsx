@@ -1,19 +1,17 @@
 "use client";
 import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { Textarea } from "@/components/ui/textarea";
 import { useWindowHeight, useWindowWidth } from "@/hooks/use-window-size";
-import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { languages } from "@codemirror/language-data";
-import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
-import ReactCodeMirror, { ViewUpdate } from "@uiw/react-codemirror";
+// import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
+// import { languages } from "@codemirror/language-data";
+// import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night";
+// import ReactCodeMirror, { ViewUpdate } from "@uiw/react-codemirror";
 import { useCallback, useEffect, useState } from "react";
 
 export const runtime = "edge";
 
 export default function Page() {
   const [editorValue, setEditorValue] = useState("");
-  const onChange = useCallback((val: string, viewUpdate: ViewUpdate) => {
-    setEditorValue(val);
-  }, []);
 
   const windowHeight = useWindowHeight();
   const windowWidth = useWindowWidth();
@@ -23,7 +21,7 @@ export default function Page() {
   return (
     <div className="flex flex-row p-6">
       <div className="flex-1 rounded-3xl shadow-lg border p-3 bg-[#1a1c27]">
-        <ReactCodeMirror
+        {/* <ReactCodeMirror
           value={editorValue}
           onChange={onChange}
           extensions={[
@@ -32,7 +30,8 @@ export default function Page() {
           theme={tokyoNight}
           height={`${windowHeight - 250}px`}
           width={`${(windowWidth - 112) / 2}px`}
-        />
+        /> */}
+        <Textarea onChange={(e) => setEditorValue(e.target.value)} />
       </div>
       <div className="w-3"></div>
       <div
