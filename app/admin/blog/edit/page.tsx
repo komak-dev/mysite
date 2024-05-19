@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-row p-6">
-      <div className="flex-1 rounded-3xl p-3 border shadow-lg bg-[#1a1c27]">
+      <div className="flex-1 rounded-3xl shadow-lg border p-3 bg-[#1a1c27]">
         <ReactCodeMirror
           value={editorValue}
           onChange={onChange}
@@ -43,7 +43,7 @@ export default function Home() {
       <div className="w-3"></div>
       <div
         className="overflow-auto flex-1 border p-3 rounded-3xl shadow-lg"
-        style={{ height: `${windowHeight - 202}px` }}
+        style={{ height: `${windowHeight - 226}px` }}
       >
         <div>
           <MarkdownRenderer md={editorValue} />
