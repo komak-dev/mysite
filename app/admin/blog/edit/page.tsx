@@ -32,6 +32,7 @@ export default function Page() {
           width={`${(windowWidth - 112) / 2}px`}
         /> */}
       <Textarea
+        spellCheck="false"
         onChange={(e) => setEditorValue(e.target.value)}
         className="overflow-auto flex-1 border p-3 rounded-3xl shadow-lg"
         style={{ height: `${windowHeight - 226}px` }}
