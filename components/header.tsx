@@ -31,7 +31,7 @@ export default function Header() {
         <div className="flex gap-4 items-center">
           <Button asChild variant="ghost">
             <Link href="/" className="pl-3 font-bold text-xl">
-              Koma's web
+              Koma&apos;s web
             </Link>
           </Button>
           <div className="hidden md:flex">

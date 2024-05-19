@@ -17,11 +17,11 @@ export function middleware(request: NextRequest) {
 
     const requestContext = getRequestContext();
 
-    const envUser = requestContext.env.AUTH_USER;
-    const envPassword = requestContext.env.AUTH_PASSWORD;
+    // const envUser = requestContext.env.AUTH_USER;
+    // const envPassword = requestContext.env.AUTH_PASSWORD;
 
-    // const envUser = "aiueo";
-    // const envPassword = "aiueo";
+    const envUser = "aiueo";
+    const envPassword = "aiueo";
     console.log(envUser, envPassword, user, password);
     if (user === envUser && password === envPassword) {
       return NextResponse.next();
