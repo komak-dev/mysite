@@ -59,9 +59,11 @@ function MobileNav() {
       <SheetContent side="left">
         <div className="flex flex-col pt-6">
           {NAVIGATION_TAGS.map((tag) => (
-            <Button asChild variant="ghost" key={tag.id}>
-              <Link href={tag.path}>{tag.label}</Link>
-            </Button>
+            <SheetClose asChild key={tag.id}>
+              <Button asChild variant="ghost">
+                <Link href={tag.path}>{tag.label}</Link>
+              </Button>
+            </SheetClose>
           ))}
         </div>
       </SheetContent>{" "}

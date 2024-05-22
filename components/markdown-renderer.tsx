@@ -6,8 +6,6 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-// import rehypePrettyCode from "rehype-pretty-code";
-// import rehypeShiki from "@shikijs/rehype";
 import rehypeHighlight from "rehype-highlight";
 import * as prod from "react/jsx-runtime";
 import Link from "next/link";
@@ -15,7 +13,16 @@ import React from "react";
 import matter from "gray-matter";
 import { Button } from "./ui/button";
 import "highlight.js/styles/tokyo-night-dark.css";
-export function MarkdownRenderer({ md }: { md: string }) {
+
+export function MarkdownRenderer({
+  md,
+  createdAt,
+  updatedAt,
+}: {
+  md: string;
+  createdAt?: string;
+  updatedAt?: string;
+}) {
   let content: string = "";
   let title: string = "";
   let tags: string[] = [];
@@ -34,6 +41,8 @@ export function MarkdownRenderer({ md }: { md: string }) {
             {title || "タイトルを入力してください"}
           </h1>
         </div>
+        <div>created at: {createdAt}</div>
+        <div>updated at: {updatedAt}</div>
         <div className="flex flex-wrap items-center justify-center pb-1">
           {tags?.map((tag: string, idx: number) => (
             <Button
@@ -54,7 +63,6 @@ export function MarkdownRenderer({ md }: { md: string }) {
             .use(remarkGfm)
             .use(remarkMath)
             .use(remarkRehype, { allowDangerousHtml: true })
-            // .use(rehypePrettyCode)
             .use(rehypeRaw)
             .use(rehypeKatex)
             .use(rehypeHighlight)
