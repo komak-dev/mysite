@@ -1,6 +1,8 @@
 import { getRequestContext } from "@cloudflare/next-on-pages";
 import Link from "next/link";
 
+export const dynamic = "force-static";
+
 export const runtime = "edge";
 
 export default async function Home() {
