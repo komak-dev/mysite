@@ -5,37 +5,29 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { getContentfromId } from "@/data/posts";
 import { useWindowHeight } from "@/hooks/use-window-size";
 import { MoveLeft } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const runtime = "edge";
+type InitialState = {
+  content: string;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  id: number | "new";
+};
 
-export default function Page() {
-  const [editorValue, setEditorValue] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
-
-  const [createdAt, setCreatedAt] = useState<string | undefined>(undefined);
-  const [updatedAt, setUpdatedAt] = useState<string | undefined>(undefined);
-
-  const id = useSearchParams().get("id");
-
-  async function setInitialContent() {
-    if (!id) return;
-    const res = await fetch(`/api/posts/from-id?id=${id}`);
-    const data = (await res.json()) as any;
-    setEditorValue(data.content);
-    setIsPublished(data.is_published == "1");
-    setCreatedAt(data.created_at);
-    setUpdatedAt(data.updated_at);
-  }
-
-  useEffect(() => {
-    setInitialContent();
-  }, []);
+export default function Editor({
+  initialState,
+}: {
+  initialState: InitialState;
+}) {
+  const [editorValue, setEditorValue] = useState(initialState.content);
+  const [isPublished, setIsPublished] = useState(initialState.isPublished);
+  const createdAt = initialState.createdAt;
+  const updatedAt = initialState.updatedAt;
+  const id = initialState.id;
 
   const windowHeight = useWindowHeight();
 
@@ -43,20 +35,15 @@ export default function Page() {
     <form action={upload}>
       <div className="flex items-center justify-between">
         <Button asChild variant="ghost">
-          <Link href="/admin">
-            <MoveLeft size="icon" />
+          <Link href="/admin/posts">
+            <MoveLeft size={20} />
             Posts
           </Link>
         </Button>
         <div className="flex justify-end items-center">
           <label className="flex items-center space-x-2 pr-4">
             <p>id</p>
-            <Input
-              value={id || "new"}
-              readOnly
-              className="w-max"
-              name="id-or-new"
-            />
+            <Input value={id} readOnly className="w-max" name="id-or-new" />
           </label>
           <div className="flex items-center space-x-2 pr-2">
             <Checkbox

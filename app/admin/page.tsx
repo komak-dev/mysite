@@ -1,11 +1,17 @@
-import { getAllTitleAndId } from "@/data/posts";
-import { getRequestContext } from "@cloudflare/next-on-pages";
 import Link from "next/link";
 
-export const runtime = "edge";
-
 async function Page() {
-  return <Link href="/admin/posts">Posts</Link>;
+  return (
+    <div className="py-10 flex flex-col items-center justify-center">
+      <div className="aspect-video w-80 rounded-lg border shadow-md">
+        <Link href="/admin/posts" className="w-full h-full text-6xl">
+          <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden">
+            Posts
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
 }
 
 export default Page;

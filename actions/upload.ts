@@ -8,17 +8,26 @@ import { redirect } from "next/navigation";
 export async function upload(formData: FormData) {
   const headersList = headers();
   const basicAuth = headersList.get("authorization");
-  if (basicAuth) {
-    const authValue = basicAuth.split(" ")[1];
-    const [user, password] = atob(authValue).split(":");
-    console.log(user, password);
+  if (!basicAuth) return;
+
+  const authValue = basicAuth.split(" ")[1];
+  const [user, password] = atob(authValue).split(":");
+
+  const requestContext = getRequestContext();
+
+  const envUser = requestContext.env.AUTH_USER;
+  const envPassword = requestContext.env.AUTH_PASSWORD;
+
+  if (!(user === envUser && password === envPassword)) {
+    return;
   }
-  // console.log(formData);
+
+  console.log(user, password);
+
   const is_published = formData.get("publish") == "on";
   const content = formData.get("content");
   const title = matter(content as string).data.title as string;
   const idOrNew = formData.get("id-or-new");
-  console.log(idOrNew, is_published, title, content);
 
   if (idOrNew != "new") {
     await getRequestContext()
@@ -41,5 +50,5 @@ export async function upload(formData: FormData) {
       .run();
   }
 
-  redirect("/admin");
+  redirect("/admin/posts");
 }

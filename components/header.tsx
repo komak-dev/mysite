@@ -21,11 +21,15 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
-export default function Header() {
+export default function Header({
+  isAuthenticated,
+}: {
+  isAuthenticated: boolean;
+}) {
   return (
     <header className="h-16 border-b p-3 flex items-center">
       <div className="md:hidden">
-        <MobileNav />
+        <MobileNav isAuthenticated={isAuthenticated} />
       </div>
       <div className="w-full p-0 m-0 flex flex-row items-center justify-between">
         <div className="flex gap-4 items-center">
@@ -40,6 +44,11 @@ export default function Header() {
                 <Link href={tag.path}>{tag.label}</Link>
               </Button>
             ))}
+            {isAuthenticated && (
+              <Button asChild variant="ghost">
+                <Link href="/admin">Admin</Link>
+              </Button>
+            )}
           </div>
         </div>
         <ModeToggle />
@@ -48,7 +57,7 @@ export default function Header() {
   );
 }
 
-function MobileNav() {
+function MobileNav({ isAuthenticated }: { isAuthenticated: boolean }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -65,6 +74,13 @@ function MobileNav() {
               </Button>
             </SheetClose>
           ))}
+          {isAuthenticated && (
+            <SheetClose asChild>
+              <Button asChild variant="ghost">
+                <Link href="/admin">Admin</Link>
+              </Button>
+            </SheetClose>
+          )}
         </div>
       </SheetContent>{" "}
     </Sheet>

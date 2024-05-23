@@ -1,15 +1,11 @@
-import { Input } from "@/components/ui/input";
-import { getAllTitleAndId } from "@/data/posts";
-import Fuse from "fuse.js";
-import { ChangeEvent } from "react";
-import Search from "./components/search";
+import Link from "next/link";
 
 async function Page() {
-  const allTitleAndId = await getAllTitleAndId();
   return (
     <div>
       Posts
-      <Search allTitleAndId={allTitleAndId} />
+      <br />
+      <Link href="/posts/search">search</Link>
     </div>
   );
 }
