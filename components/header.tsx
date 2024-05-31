@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ModeToggle } from "./mode-toggle";
@@ -21,15 +19,12 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
-export default function Header({
-  isAuthenticated,
-}: {
-  isAuthenticated: boolean;
-}) {
+export default function Header() {
+  const isDevMode = process.env.NODE_ENV == "development";
   return (
     <header className="h-16 border-b p-3 flex items-center">
       <div className="md:hidden">
-        <MobileNav isAuthenticated={isAuthenticated} />
+        <MobileNav isDevMode={isDevMode} />
       </div>
       <div className="w-full p-0 m-0 flex flex-row items-center justify-between">
         <div className="flex gap-4 items-center">
@@ -44,7 +39,7 @@ export default function Header({
                 <Link href={tag.path}>{tag.label}</Link>
               </Button>
             ))}
-            {isAuthenticated && (
+            {isDevMode && (
               <Button asChild variant="ghost">
                 <Link href="/admin">Admin</Link>
               </Button>
@@ -57,7 +52,7 @@ export default function Header({
   );
 }
 
-function MobileNav({ isAuthenticated }: { isAuthenticated: boolean }) {
+function MobileNav({ isDevMode }: { isDevMode: boolean }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -74,7 +69,7 @@ function MobileNav({ isAuthenticated }: { isAuthenticated: boolean }) {
               </Button>
             </SheetClose>
           ))}
-          {isAuthenticated && (
+          {isDevMode && (
             <SheetClose asChild>
               <Button asChild variant="ghost">
                 <Link href="/admin">Admin</Link>
@@ -82,7 +77,7 @@ function MobileNav({ isAuthenticated }: { isAuthenticated: boolean }) {
             </SheetClose>
           )}
         </div>
-      </SheetContent>{" "}
+      </SheetContent>
     </Sheet>
   );
 }

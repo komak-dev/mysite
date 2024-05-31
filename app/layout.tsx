@@ -4,9 +4,9 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import { checkAuth } from "@/data/auth";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
+export const dynamic = "force-static";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +19,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isAuthenticated = checkAuth();
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className={(inter.className, "min-h-dvh")}>
@@ -29,7 +28,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header isAuthenticated={isAuthenticated} />
+          <Header />
           <main>{children}</main>
           <Footer />
         </ThemeProvider>

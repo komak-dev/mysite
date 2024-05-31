@@ -13,26 +13,10 @@ import React from "react";
 import matter from "gray-matter";
 import { Button } from "./ui/button";
 import "highlight.js/styles/tokyo-night-dark.css";
+import { Post } from "@/types/post";
 
-export function MarkdownRenderer({
-  md,
-  createdAt,
-  updatedAt,
-}: {
-  md: string;
-  createdAt?: string;
-  updatedAt?: string;
-}) {
-  let content: string = "";
-  let title: string = "";
-  let tags: string[] = [];
-  try {
-    const mdObj = matter(md);
-    content = mdObj.content;
-    title = mdObj.data.title as string;
-    tags = mdObj.data.tags as string[];
-  } catch {}
-
+export function MarkdownRenderer({ post }: { post: Post }) {
+  const { title, tags, content, createdAt, updatedAt } = post;
   return (
     <div>
       <div className="mb-6  border-b flex flex-col justify-between items-center px-3">
@@ -51,7 +35,7 @@ export function MarkdownRenderer({
               className="p-1 h-max text-zinc-500"
               key={idx}
             >
-              <Link href={`/posts/tag/${tag}`}>{tag}</Link>
+              <Link href={`/posts/tags/${tag}`}>{tag}</Link>
             </Button>
           ))}
         </div>

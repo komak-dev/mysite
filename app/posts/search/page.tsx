@@ -1,14 +1,15 @@
-import { getAllTitleAndId } from "@/data/posts";
+import { getAllPosts } from "@/data/posts";
 import Search from "../components/search";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
+export const dynamic = "force-static";
 
 async function Page() {
-  const allTitleAndId = await getAllTitleAndId();
+  const posts= getAllPosts();
   return (
     <div>
       Posts
-      <Search allTitleAndId={allTitleAndId} />
+      <Search posts={posts} />
     </div>
   );
 }

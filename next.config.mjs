@@ -1,11 +1,9 @@
-import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
-
-if (process.env.NODE_ENV == "development") {
-  console.log("developement");
-  await setupDevPlatform();
-}
+const isDev = process.env.NODE_ENV === "development";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = { pageExtensions: isDev
+    ? ["mdx", "md", "jsx", "js", "tsx", "ts", "dev.tsx"]
+    : ["mdx", "md", "jsx", "js", "tsx", "ts"],
+};
 
 export default nextConfig;

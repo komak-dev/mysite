@@ -1,32 +1,53 @@
-import { getRequestContext } from "@cloudflare/next-on-pages";
-import { cache } from "react";
+import { Post } from "@/types/post";
+import fs from "fs";
+import matter from "gray-matter";
+import path from "path";
 
-export const getAllPosts = cache(async () => {});
+export function getAllPosts() {
+  const posts: Post[] = [];
+  const contentDir = path.join(process.cwd(), "contents");
+  const postDirList = fs.readdirSync(contentDir);
+  postDirList.forEach((postDirName) => {
+    if (postDirName !== ".DS_Store") {
+      const post = getPostsById(postDirName);
+      posts.push(post);
+    }
+  });
+  return posts;
+}
 
-export const getPostfromId = cache(async (id: number) => {
-  const { results } = await getRequestContext()
-    .env.D1.prepare(
-      `
-  SELECT content,is_published,created_at,updated_at FROM posts where id = ?
-  `
-    )
-    .bind(id)
-    .all();
-  return {
-    content: results[0].content as string,
-    isPublished: !!results[0].is_published as boolean,
-    createdAt: results[0].created_at as string,
-    updatedAt: results[0].updated_at as string,
+export function getPostsById(id: string) {
+  const postDir = path.join(process.cwd(), "contents", id);
+  const postMdFile = path.join(postDir, "index.md");
+  const { birthtime, mtime } = fs.statSync(postDir);
+  const md = fs.readFileSync(postMdFile, {
+    encoding: "utf-8",
+  });
+  const {
+    data: { title, tags },
+    content,
+  } = matter(md);
+  const createdAt = birthtime.toDateString();
+  const updatedAt = mtime.toDateString();
+  const post: Post = {
+    id,
+    title,
+    tags,
+    content,
+    createdAt,
+    updatedAt,
   };
-});
+  console.log(post);
+  return post;
+}
 
-export const getAllTitleAndId = cache(async () => {
-  const D1: D1Database | undefined = process.env.D1 as any as D1Database;
-  if (D1 == undefined) {
-    console.log("d1 not found");
-    return [];
-  }
-  const { results }: { results: { id: number; title: string }[] } =
-    await D1.prepare(`SELECT id,title FROM posts`).all();
-  return results;
-});
+export function getAllTags() {
+  const posts = getAllPosts();
+  const tags: Set<string> = new Set();
+  posts.forEach((post) => {
+    post.tags?.forEach((tag) => {
+      tags.add(tag);
+    });
+  });
+  return Array.from(tags);
+}
