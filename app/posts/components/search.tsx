@@ -3,8 +3,10 @@ import { Input } from "@/components/ui/input";
 import { Post } from "@/types/post";
 import Fuse from "fuse.js";
 import { useState } from "react";
+import { SearchBar } from "./search-bar";
+import { useRouter } from "next/navigation";
 
-function Search({ posts }: { posts: Post[] }) {
+export default function Search({ posts }: { posts: Post[] }) {
   const [word, setWord] = useState("");
   const options = {
     keys: ["id", "title"],
@@ -14,16 +16,21 @@ function Search({ posts }: { posts: Post[] }) {
     options,
   );
 
+  const router = useRouter()
+
   return (
     <>
-      <Input onChange={(e) => setWord(e.target.value)} />
+      <SearchBar
+        onChange={(e) => setWord(e.target.value)}
+        onBlur={() => {
+          if (!word) {
+            router.push("/posts");
+          }
+        }}
+      />
       {posts
         .filter((post) => {
-          if (!word) {
-            return true;
-          } else {
-            return fuse.search(word).find(({ item: { id } }) => id == post.id);
-          }
+          return fuse.search(word).find(({ item: { id } }) => id == post.id);
         })
         .map((post) => (
           <div key={post.id}>{post.title}</div>
@@ -31,5 +38,3 @@ function Search({ posts }: { posts: Post[] }) {
     </>
   );
 }
-
-export default Search;

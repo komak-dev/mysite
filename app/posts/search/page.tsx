@@ -8,7 +8,6 @@ async function Page() {
   const posts= getAllPosts();
   return (
     <div>
-      Posts
       <Search posts={posts} />
     </div>
   );

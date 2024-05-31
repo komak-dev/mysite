@@ -1,4 +1,4 @@
 ---
-title: sample_title
+title: 2つめのポスト
 tags: []
 ---
