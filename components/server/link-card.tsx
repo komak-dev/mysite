@@ -24,7 +24,7 @@ export function LinkCard({ linkCardItem }: { linkCardItem: LinkCardItem }) {
                   />
                 </div>
               )}
-              <p>{linkCardItem.siteHostName}</p>
+              <p className="text-base">{linkCardItem.siteHostName}</p>
             </div>
           </div>
           {linkCardItem.ogImage && (
