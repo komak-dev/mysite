@@ -52,6 +52,7 @@ export async function MarkdownRenderer({ post }: { post: Post }) {
         pre: CustomPre,
         p: CustomP,
         img: CustomImage,
+        a: CustomA,
       },
     })
     .process(content || "");
@@ -114,17 +115,34 @@ async function CustomPre({ children }: { children: React.ReactElement }) {
   });
 
   return (
-    <div className="py-2 overflow-hidden group relative">
-      <div className="opacity-0 group-hover:opacity-50 absolute top-3 right-1 text-white z-10">
+    <div className="py-2 rounded-lg overflow-hidden bg-[#242a2e] my-3 group relative">
+      <div className="opacity-0 group-hover:opacity-50 absolute top-1 right-1 text-white z-10">
         <CopyButton text={code} />
       </div>
-      <pre className="rounded-lg overflow-auto text-sm px-2 py-3 bg-[#242a2e]">
+      <pre className="mx-2 text-base">
         {filename && (
           <div className="text-white opacity-50 pb-2">{filename}</div>
         )}
-        <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+        <div
+          className="overflow-auto"
+          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+        />
       </pre>
     </div>
+  );
+}
+
+function CustomA({
+  children,
+  href,
+}: {
+  children: React.ReactElement;
+  href: string;
+}) {
+  return (
+    <Link href={href} className="text-[#99c3ff]">
+      linklinklink: {children}
+    </Link>
   );
 }
 

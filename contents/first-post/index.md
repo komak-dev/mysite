@@ -5,7 +5,7 @@ tags: [next.js, react]
 
 # The First Post
 
-あいうえおかきくけこさしすせそ 
+あいうえおかきくけこさしすせそ
 
 [link](https://zenn.dev/angelecho/articles/8f200e51a6b475)
 
