@@ -9,12 +9,16 @@ import rehypeKatex from "rehype-katex";
 import * as prod from "react/jsx-runtime";
 import Link from "next/link";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Post } from "@/types/post";
 import { getLinkCardItem } from "@/data/get-link-card-item";
 import { LinkCard } from "./link-card";
-import { CopyButton } from "./client/copy-button";
+import { CopyButton } from "@/components/client/copy-button";
 import { codeToHtml } from "shiki";
+import Image from "next/image";
+import path from "path";
+import { visit } from "unist-util-visit";
+import fs from "fs";
 
 export async function MarkdownRenderer({ post }: { post: Post }) {
     const { title, tags, content, createdAt, updatedAt } = post;
@@ -24,6 +28,15 @@ export async function MarkdownRenderer({ post }: { post: Post }) {
         .use(remarkGfm)
         .use(remarkMath)
         .use(remarkRehype, { allowDangerousHtml: true })
+        .use(() => {
+            return (tree) => {
+                visit(tree, "element", (node: any) => {
+                    if (node.tagName == "img" && node.properties.src.startsWith("/")) {
+                        node.properties.src = "/" + post.slug + node.properties.src;
+                    }
+                });
+            };
+        })
         .use(rehypeRaw)
         .use(rehypeKatex)
         //@ts-ignore
@@ -38,6 +51,7 @@ export async function MarkdownRenderer({ post }: { post: Post }) {
                 h3: CustomH3,
                 pre: CustomPre,
                 p: CustomP,
+                img: CustomImage,
             },
         })
         .process(content || "");
@@ -85,7 +99,6 @@ function CustomH3({ children }: { children: React.ReactElement }) {
 }
 
 async function CustomPre({ children }: { children: React.ReactElement }) {
-    console.log("code", children);
     const meta: string = children.props.className?.toString();
     const language = meta?.startsWith("language-")
         ? meta?.split("-")[1].split(":")[0]
@@ -106,7 +119,9 @@ async function CustomPre({ children }: { children: React.ReactElement }) {
                 <CopyButton text={code} />
             </div>
             <pre className="rounded-lg overflow-auto text-sm px-2 py-3 bg-[#242a2e]">
-                {filename && <div className="text-white opacity-50 pb-2">{filename}</div>}
+                {filename && (
+                    <div className="text-white opacity-50 pb-2">{filename}</div>
+                )}
                 <div dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
             </pre>
         </div>
@@ -122,4 +137,29 @@ async function CustomP({ children }: { children: React.ReactElement }) {
         return <LinkCard linkCardItem={linkCardItem} />;
     }
     return <p>{children}</p>;
+}
+
+function CustomImage({ src, alt }: { src: string; alt: string }) {
+    if (!src.startsWith("/")) {
+        return (
+            <Image
+                src={src}
+                alt={alt}
+                width={600}
+                height={600}
+                className="mx-auto rounded-lg my-2"
+            />
+        );
+    }
+    const imagePath = path.join(process.cwd(), "contents", src);
+    const image = fs.readFileSync(imagePath);
+    return (
+        <Image
+            src={"data:image/jpg;base64," + image.toString("base64")}
+            alt={alt}
+            width={600}
+            height={600}
+            className="mx-auto rounded-lg my-2"
+        />
+    );
 }

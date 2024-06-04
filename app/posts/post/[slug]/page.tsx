@@ -1,4 +1,4 @@
-import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { MarkdownRenderer } from "@/components/server/markdown-renderer";
 import { getAllPosts, getPostsBySlug } from "@/data/posts";
 
 export default function Page({

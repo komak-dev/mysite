@@ -1,11 +1,10 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import { Post } from "@/types/post";
 import Fuse from "fuse.js";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
 import { useRouter } from "next/navigation";
-import PostCard from "@/components/post-card";
+import { PostCard } from "@/components/server/post-card";
 
 export default function Search({ posts }: { posts: Post[] }) {
   const [word, setWord] = useState("");
@@ -30,16 +29,16 @@ export default function Search({ posts }: { posts: Post[] }) {
         }}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-9">
-      {posts
-        .filter((post) => {
-          return fuse
-            .search(word)
-            .find(({ item: { slug } }) => slug == post.slug);
-        })
-        .map((post) => (
-          <PostCard post={post} key={post.slug}/>
-        ))}
-        </div>
+        {posts
+          .filter((post) => {
+            return fuse
+              .search(word)
+              .find(({ item: { slug } }) => slug == post.slug);
+          })
+          .map((post) => (
+            <PostCard post={post} key={post.slug} />
+          ))}
+      </div>
     </>
   );
 }

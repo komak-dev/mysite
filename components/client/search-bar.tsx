@@ -1,7 +1,6 @@
 "use clint";
-import { Command, CommandInput } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
-import { Search, SearchIcon } from "lucide-react";
+import { Search } from "lucide-react";
 import { ChangeEventHandler } from "react";
 
 export function SearchBar({

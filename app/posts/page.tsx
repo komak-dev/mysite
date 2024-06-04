@@ -1,8 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { getAllPosts } from "@/data/posts";
 import Link from "next/link";
-import { SearchBarDummy } from "./components/search-bar";
-import PostCard from "@/components/post-card";
+import { SearchBarDummy } from "@/components/client/search-bar";
+import { PostCard } from "@/components/server/post-card";
 
 export const runtime = "nodejs";
 export const dynamic = "force-static";

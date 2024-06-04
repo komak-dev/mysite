@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { ModeToggle } from "./mode-toggle";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/client/mode-toggle";
 import {
   Sheet,
   SheetContent,

@@ -34,7 +34,6 @@ export function getPostsBySlug(slug: string) {
     createdAt,
     updatedAt,
   };
-  console.log(post);
   return post;
 }
 
@@ -51,7 +50,7 @@ export function getAllTags() {
 
 export function getMdBySlug(slug: string) {
   const postMdFile = path.join(
-    path.join(process.cwd(), "contents", slug, "index.md")
+    path.join(process.cwd(), "contents", slug, "index.md"),
   );
   const md = fs.readFileSync(postMdFile, {
     encoding: "utf-8",
