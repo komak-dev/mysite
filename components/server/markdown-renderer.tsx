@@ -79,7 +79,7 @@ export async function MarkdownRenderer({ post }: { post: Post }) {
           ))}
         </div>
       </div>
-      <div className="text-zinc-700 dark:text-zinc-300 text-lg sm:text-base">
+      <div className="text-zinc-700 dark:text-zinc-300 text-lg tracking-wide">
         {parsedMarkdown.result}
       </div>
     </div>
