@@ -1,9 +1,12 @@
 import { MarkdownRenderer } from "@/components/markdown-renderer";
-import { getAllPosts, getPostsById } from "@/data/posts";
+import { getAllPosts, getPostsBySlug } from "@/data/posts";
 
-export default function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
-  const post = getPostsById(id);
+export default function Page({
+  params: { slug },
+}: {
+  params: { slug: string };
+}) {
+  const post = getPostsBySlug(slug);
   return (
     <div>
       <MarkdownRenderer post={post} />
@@ -14,6 +17,6 @@ export default function Page({ params }: { params: { id: string } }) {
 export function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
-    id: post.id,
+    slug: post.slug,
   }));
 }

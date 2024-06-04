@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { getAllPosts } from "@/data/posts";
 import Link from "next/link";
 import { SearchBarDummy } from "./components/search-bar";
+import PostCard from "@/components/post-card";
 
 export const runtime = "nodejs";
 export const dynamic = "force-static";
@@ -11,17 +12,13 @@ async function Page() {
   return (
     <div>
       <Link href="/posts/search">
-      <SearchBarDummy/>
+        <SearchBarDummy />
       </Link>
-      <ul>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-9">
         {posts.map((post) => (
-          <Link href={`/posts/${post.id}`} key={post.id}>
-            <li>
-              {post.id}: {post.title}
-            </li>
-          </Link>
+          <PostCard post={post} key={post.slug} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

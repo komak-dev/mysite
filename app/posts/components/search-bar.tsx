@@ -12,7 +12,7 @@ export function SearchBar({
   onBlur: React.FocusEventHandler<HTMLInputElement> | undefined;
 }) {
   return (
-    <div className="p-6">
+    <div className="py-6">
       <div className="relative w-full">
         <Input
           className="pl-10 text-md"
@@ -31,7 +31,7 @@ export function SearchBar({
 
 export function SearchBarDummy() {
   return (
-    <div className="p-6">
+    <div className="py-6">
       <div className="relative w-full">
         <Input className="pl-10 text-md" readOnly />
         <Search

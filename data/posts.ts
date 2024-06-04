@@ -9,20 +9,17 @@ export function getAllPosts() {
   const postDirList = fs.readdirSync(contentDir);
   postDirList.forEach((postDirName) => {
     if (postDirName !== ".DS_Store") {
-      const post = getPostsById(postDirName);
+      const post = getPostsBySlug(postDirName);
       posts.push(post);
     }
   });
   return posts;
 }
 
-export function getPostsById(id: string) {
-  const postDir = path.join(process.cwd(), "contents", id);
-  const postMdFile = path.join(postDir, "index.md");
+export function getPostsBySlug(slug: string) {
+  const postDir = path.join(process.cwd(), "contents", slug);
   const { birthtime, mtime } = fs.statSync(postDir);
-  const md = fs.readFileSync(postMdFile, {
-    encoding: "utf-8",
-  });
+  const md = getMdBySlug(slug);
   const {
     data: { title, tags },
     content,
@@ -30,7 +27,7 @@ export function getPostsById(id: string) {
   const createdAt = birthtime.toDateString();
   const updatedAt = mtime.toDateString();
   const post: Post = {
-    id,
+    slug,
     title,
     tags,
     content,
@@ -50,4 +47,14 @@ export function getAllTags() {
     });
   });
   return Array.from(tags);
+}
+
+export function getMdBySlug(slug: string) {
+  const postMdFile = path.join(
+    path.join(process.cwd(), "contents", slug, "index.md")
+  );
+  const md = fs.readFileSync(postMdFile, {
+    encoding: "utf-8",
+  });
+  return md;
 }
