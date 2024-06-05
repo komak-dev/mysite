@@ -1,3 +1,4 @@
+import { Activity } from "@/types/activity";
 import { Post } from "@/types/post";
 import { ArrowRightFromLine } from "lucide-react";
 import Link from "next/link";
@@ -18,25 +19,25 @@ export function PostCard({ post }: { post: Post }) {
   );
 }
 
-export function ActivityPostCard({ post }: { post: Post }) {
+export function ActivityCard({ activity }: { activity: Activity }) {
   return (
-    <Link href={`/posts/post/${post.slug}`}>
+    <Link href={`/posts/post/${activity.post.slug}`}>
       <div className="aspect-auto border border-muted rounded-3xl shadow-md bg-muted/80 m-[3px] p-3 hover:p-[15px] hover:m-0 transition-all flex">
         <div className="w-10 flex items-center pr-2">
-          <div className="h-7 w-7 border border-muted rounded-[14px] shadow-md shadow-inner bg-background" />
+          <div className="h-7 w-7 border border-muted rounded-[14px] shadow-inner bg-background" />
         </div>
         <div>
           <div className="opacity-50 flex gap-3">
-            <p>{post.updatedAt}</p>
+            <p>{activity.date}</p>
             <p>
-              {post.createdAt == post.updatedAt
-                ? "create a new post"
-                : "update a post"}
+              {activity.activity == "create"
+                ? "published a new post"
+                : "updated a post"}
             </p>
           </div>
           <div className="flex py-2 text-xl items-center gap-2 opacity-80">
             <ArrowRightFromLine />
-            <p>{post.title}</p>
+            <p>{activity.post.title}</p>
           </div>
         </div>
       </div>

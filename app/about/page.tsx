@@ -1,11 +1,6 @@
-import { Button } from "@/components/ui/button";
 
 function Page() {
-  return (
-    <div>
-      <Button>About</Button>
-    </div>
-  );
+  return <div>About</div>;
 }
 
 export default Page;

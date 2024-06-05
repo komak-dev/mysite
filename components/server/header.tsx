@@ -73,11 +73,11 @@ function MobileNav({ isDevMode }: { isDevMode: boolean }) {
 }
 
 const NAVIGATION_TAGS: TAG[] = [
-  {
-    label: "About",
-    path: "/about",
-    id: "about",
-  },
+  // {
+  //   label: "About",
+  //   path: "/about",
+  //   id: "about",
+  // },
   {
     label: "Posts",
     path: "/posts",

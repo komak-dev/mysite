@@ -21,7 +21,7 @@ import { visit } from "unist-util-visit";
 import fs from "fs";
 
 export async function MarkdownRenderer({ post }: { post: Post }) {
-  const { title, tags, content, createdAt, updatedAt } = post;
+  const { title, content, createdAt, updatedAt } = post;
 
   const parsedMarkdown = await unified()
     .use(remarkParse)
@@ -61,24 +61,11 @@ export async function MarkdownRenderer({ post }: { post: Post }) {
     <div>
       <div className="mb-6  border-b flex flex-col justify-between items-center px-3">
         <div className="flex flex-col justify-center items-center flex-1 py-20">
-          <h1 className="font-bold text-3xl text-center">
+          <h1 className="opacity-90 font-bold text-3xl text-center">
             {title || "タイトルを入力してください"}
           </h1>
         </div>
-        <div>created at: {createdAt}</div>
-        <div>updated at: {updatedAt}</div>
-        <div className="flex flex-wrap items-center justify-center pb-1">
-          {tags?.map((tag: string, idx: number) => (
-            <Button
-              asChild
-              variant="ghost"
-              className="p-1 h-max text-zinc-500"
-              key={idx}
-            >
-              <Link href={`/posts/tags/${tag}`}>{tag}</Link>
-            </Button>
-          ))}
-        </div>
+        <div className="flex flex-col items-center pb-7 opacity-60 text-lg"> <p>{createdAt}</p></div>
       </div>
       <div className="text-zinc-700 dark:text-zinc-300 text-lg tracking-wide">
         {parsedMarkdown.result}
@@ -173,7 +160,7 @@ function CustomImage({ src, alt }: { src: string; alt: string }) {
   const image = fs.readFileSync(imagePath);
   return (
     <Image
-      src={"data:image/jpg;base64," + image.toString("base64")}
+      src={`data:image/${src.split('.').pop()};base64,${image.toString("base64")}`}
       alt={alt}
       width={600}
       height={600}

@@ -20,32 +20,20 @@ export function getPostsBySlug(slug: string) {
   const postDir = path.join(process.cwd(), "contents", slug);
   const { birthtime, mtime } = fs.statSync(postDir);
   const md = getMdBySlug(slug);
-  const {
-    data: { title, tags },
+  let {
+    data: { title, createdAt, updatedAt },
     content,
   } = matter(md);
-  const createdAt = birthtime.toDateString();
-  const updatedAt = mtime.toDateString();
+  createdAt = new Date(createdAt).toDateString();
+  updatedAt = new Date(updatedAt).toDateString();
   const post: Post = {
     slug,
     title,
-    tags,
     content,
     createdAt,
     updatedAt,
   };
   return post;
-}
-
-export function getAllTags() {
-  const posts = getAllPosts();
-  const tags: Set<string> = new Set();
-  posts.forEach((post) => {
-    post.tags?.forEach((tag) => {
-      tags.add(tag);
-    });
-  });
-  return Array.from(tags);
 }
 
 export function getMdBySlug(slug: string) {
